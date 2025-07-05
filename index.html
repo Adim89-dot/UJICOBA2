@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Kwitansi Masjid AT-TAQWA</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border: 4px solid #c00;
+      position: relative;
+    }
+    .kop {
+      text-align: center;
+      border-bottom: 2px solid #c00;
+      padding-bottom: 10px;
+    }
+    .kop img {
+      height: 80px;
+      margin-bottom: 10px;
+    }
+    .kop h2 {
+      margin: 5px 0;
+      color: #003366;
+    }
+    .kop p {
+      margin: 0;
+      font-size: 14px;
+    }
+    .judul {
+      background: #ffcccc;
+      color: #c00;
+      font-weight: bold;
+      text-align: center;
+      font-size: 18px;
+      padding: 6px;
+      margin: 20px 0;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+    }
+    .btn {
+      background: green;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .kwitansi-print {
+      margin-top: 30px;
+      padding: 20px;
+      border: 2px dashed #000;
+      display: none;
+    }
+    .kwitansi-print h3 {
+      text-align: center;
+    }
+    .ttd {
+      text-align: right;
+      margin-top: 40px;
+    }
+    @media print {
+      .form, .btn { display: none; }
+      .kwitansi-print {
+        border: none;
+        display: block !important;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="kop">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Mosque_icon.svg/64px-Mosque_icon.svg.png" alt="Logo Masjid">
+    <h2>TA'MIR MASJID AGUNG AT–TAQWA BONDOWOSO</h2>
+    <p>Sekretariat: Jl. Letnan Sutarman No. 08 Bondowoso – JATIM</p>
+  </div>
+
+  <div class="form">
+    <div class="judul">KWITANSI</div>
+
+    <label>Telah diterima dari:</label>
+    <input type="text" id="nama">
+
+    <label>Jumlah Uang (terbilang):</label>
+    <input type="text" id="terbilang">
+
+    <label>Untuk Pembayaran:</label>
+    <textarea id="keperluan" rows="2"></textarea>
+
+    <label>Nominal (Rp):</label>
+    <input type="text" id="nominal">
+
+    <label>Tanggal:</label>
+    <input type="date" id="tanggal">
+
+    <label>Nama Penandatangan:</label>
+    <input type="text" id="ttd">
+
+    <button class="btn" onclick="cetakKwitansi()">Cetak Kwitansi</button>
+  </div>
+
+  <div class="kwitansi-print" id="hasil">
+    <h3>KWITANSI</h3>
+    <p><strong>Telah diterima dari:</strong> <span id="outNama"></span></p>
+    <p><strong>Jumlah Uang:</strong><br> === <span id="outTerbilang"></span> ===</p>
+    <p><strong>Untuk Pembayaran:</strong> <span id="outKeperluan"></span></p>
+
+    <div style="margin-top:30px; font-size: 18px;">
+      <p><strong>Rp. <span id="outNominal"></span>,-</strong></p>
+    </div>
+
+    <div class="ttd">
+      <p>Bondowoso, <span id="outTanggal"></span></p>
+      <p><br><br><span id="outTTD"></span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function cetakKwitansi() {
+  document.getElementById("outNama").textContent = document.getElementById("nama").value;
+  document.getElementById("outTerbilang").textContent = document.getElementById("terbilang").value.toUpperCase();
+  document.getElementById("outKeperluan").textContent = document.getElementById("keperluan").value;
+  document.getElementById("outNominal").textContent = document.getElementById("nominal").value;
+  document.getElementById("outTanggal").textContent = new Date(document.getElementById("tanggal").value).toLocaleDateString("id-ID", {
+    day: 'numeric', month: 'long', year: 'numeric'
+  });
+  document.getElementById("outTTD").textContent = document.getElementById("ttd").value;
+
+  document.getElementById("hasil").style.display = "block";
+  setTimeout(() => window.print(), 500);
+}
+</script>
+</body>
+</html>
